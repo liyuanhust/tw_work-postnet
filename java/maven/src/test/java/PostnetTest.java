@@ -121,9 +121,9 @@ public class PostnetTest {
         String post = "abc123";
         //when
         Postnet postnet = new Postnet();
-        boolean checkResult = postnet.check(post);
+        String result = postnet.convertPost(post);
         //then
-        assertThat(checkResult).isEqualTo(false);
+        assertThat(result).isEqualTo("");
     }
 
     @Test
@@ -132,19 +132,8 @@ public class PostnetTest {
         String post = "123456";
         //when
         Postnet postnet = new Postnet();
-        boolean checkResult = postnet.check(post);
+        String result = postnet.convertPost(post);
         //then
-        assertThat(checkResult).isEqualTo(false);
-    }
-
-    @Test
-    public void should_return_true_given_right_digit(){
-        //given
-        String post = "12345";
-        //when
-        Postnet postnet = new Postnet();
-        boolean checkResult = postnet.check(post);
-        //then
-        assertThat(checkResult).isEqualTo(true);
+        assertThat(result).isEqualTo("");
     }
 }

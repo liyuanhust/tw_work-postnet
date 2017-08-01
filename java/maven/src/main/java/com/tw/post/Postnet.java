@@ -1,9 +1,12 @@
 package com.tw.post;
 
+import org.fest.util.VisibleForTesting;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Postnet {
+    public static final String INVALIDATE_POST = "";
     private static final Map<Integer, String> digitMap = new HashMap<Integer, String>();
 
     static {
@@ -24,7 +27,14 @@ public class Postnet {
         return digitMap.get(digit);
     }
 
-    public boolean check(String post) {
+    public String convertPost(String post) {
+        if (!check(post)){
+            return INVALIDATE_POST;
+        }
+        return post;
+    }
+
+    private boolean check(String post) {
         if (post == null || post.length() == 0) {
             return false;
         }
