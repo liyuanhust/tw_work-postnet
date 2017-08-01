@@ -1,4 +1,5 @@
 import com.google.common.collect.Lists;
+import com.tw.post.CollectionUtil;
 import com.tw.post.Postnet;
 import org.junit.Test;
 
@@ -152,7 +153,7 @@ public class PostnetTest {
         for (int i:result) {
             resultStr.append(i);
         }
-        assertThat(resultStr.toString()).isEqualTo("123455555");
+        assert CollectionUtil.converIntListToString(result).equals("123455555");
     }
 
     @Test
@@ -178,5 +179,22 @@ public class PostnetTest {
         Postnet postnet = new Postnet();
         String zipCode = postnet.convertPostToZipCode(postNumber);
         assert zipCode.equals("||:|:::|:|:|:::|:::||::||::|:|:|");
+    }
+
+
+    @Test
+    public void should_return_invalidate_given_wrong_zipCode(){
+        String zipCode = "|||";
+        Postnet postnet = new Postnet();
+        String post = postnet.convertZipCodeToPost(zipCode);
+        assert post.equals(Postnet.INVALIDATE_POST);
+    }
+
+    @Test
+    public void should_return_digit_list_given_zipCode(){
+        String zipCode = "||:|:::|:|:|:::|:::||::||::|:|:|";
+        Postnet postnet = new Postnet();
+        List<Integer> digitList = postnet.covertZipcodeToDigitList(zipCode);
+        assert CollectionUtil.converIntListToString(digitList).equals("957135");
     }
 }
