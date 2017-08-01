@@ -100,9 +100,18 @@ public class Postnet {
 
     public String convertZipCodeToPost(String zipCode) {
         if (!checkZipCode(zipCode)) {
-            return "";
+            return INVALIDATE_POST;
         }
-        return zipCode;
+        List<Integer> digitList = covertZipcodeToDigitList(zipCode);
+        if (!verifyPostDigits(digitList)) {
+            return INVALIDATE_POST;
+        }
+        digitList.remove(digitList.size()-1);
+        String postCode = CollectionUtil.converIntListToString(digitList);
+        if (digitList.size() == 9) {
+            postCode = postCode.substring(0,4)+"-"+postCode.substring(4,9);
+        }
+        return postCode;
     }
 
     @VisibleForTesting
@@ -126,7 +135,7 @@ public class Postnet {
         if (length <= 2) {
             return false;
         }
-        if (!zipCode.startsWith("1") || !zipCode.endsWith("|")) {
+        if (!zipCode.startsWith("|") || !zipCode.endsWith("|")) {
             return false;
         }
         if ((length - 2) % 5 != 0) {
@@ -140,6 +149,9 @@ public class Postnet {
     }
 
     public boolean verifyPostDigits(List<Integer> digitList) {
+        if (digitList == null || digitList.isEmpty()) {
+            return false;
+        }
         int sum = 0;
         for (int i = 0, size = digitList.size(); i < size; i++) {
             sum += digitList.get(i);

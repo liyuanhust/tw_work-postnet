@@ -199,10 +199,18 @@ public class PostnetTest {
     }
 
     @Test
-    public void should_return_false_when_given_wrong_vierty_code() {
+    public void should_return_false_when_given_wrong_verify_code() {
         List<Integer> digitList = Lists.newArrayList(9,5,7,1,3,6);
         Postnet postnet = new Postnet();
         boolean verifyResult = postnet.verifyPostDigits(digitList);
         assert !verifyResult;
+    }
+
+    @Test
+    public void should_return_postcode_when_given_zipcode(){
+        String zipCode = "||:|:::|:|:|:::|:::||::||::|:|:|";
+        Postnet postnet = new Postnet();
+        String postCode = postnet.convertZipCodeToPost(zipCode);
+        assert  postCode.equals("95713");
     }
 }
