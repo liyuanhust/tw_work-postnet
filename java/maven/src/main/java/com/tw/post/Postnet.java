@@ -138,4 +138,13 @@ public class Postnet {
         }
         return true;
     }
+
+    public boolean verifyPostDigits(List<Integer> digitList) {
+        int sum = 0;
+        for (int i = 0, size = digitList.size(); i < size; i++) {
+            sum += digitList.get(i);
+        }
+        return sum % 10 == 0;
+
+    }
 }

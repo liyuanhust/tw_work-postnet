@@ -197,4 +197,12 @@ public class PostnetTest {
         List<Integer> digitList = postnet.covertZipcodeToDigitList(zipCode);
         assert CollectionUtil.converIntListToString(digitList).equals("957135");
     }
+
+    @Test
+    public void should_return_false_when_given_wrong_vierty_code() {
+        List<Integer> digitList = Lists.newArrayList(9,5,7,1,3,6);
+        Postnet postnet = new Postnet();
+        boolean verifyResult = postnet.verifyPostDigits(digitList);
+        assert !verifyResult;
+    }
 }
