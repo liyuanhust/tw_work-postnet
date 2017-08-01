@@ -34,7 +34,7 @@ public class PostnetTest {
         Postnet postnet = new Postnet();
         String barcode = postnet.convertDigit(digit);
         //then
-        assertThat(barcode).isEqualTo(":::||");
+        assertThat(barcode).isEqualTo("::||:");
     }
 
     @Test

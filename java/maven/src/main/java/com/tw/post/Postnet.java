@@ -1,40 +1,25 @@
 package com.tw.post;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Postnet {
+    private static final Map<Integer, String> digitMap = new HashMap<Integer, String>();
+    static{
+        digitMap.put(1,":::||");
+        digitMap.put(2,"::|:|");
+        digitMap.put(3,"::||:");
+        digitMap.put(4,":|::|");
+        digitMap.put(5,":|:|:");
+        digitMap.put(6,":||::");
+        digitMap.put(7,"|:::|");
+        digitMap.put(8,"|::|:");
+        digitMap.put(9,"|:|::");
+        digitMap.put(0,"||:::");
+    }
+
+
     public String convertDigit(int digit) {
-        String barcode = "";
-        switch (digit) {
-            case 1:
-                barcode = ":::||";
-                break;
-            case 2:
-                barcode = "::|:|";
-                break;
-            case 3:
-                barcode = ":::||";
-                break;
-            case 4:
-                barcode = ":|::|";
-                break;
-            case 5:
-                barcode = ":|:|:";
-                break;
-            case 6:
-                barcode = ":||::";
-                break;
-            case 7:
-                barcode = "|:::|";
-                break;
-            case 8:
-                barcode = "|::|:";
-                break;
-            case 9:
-                barcode = "|:|::";
-                break;
-            case 0:
-                barcode = "||:::";
-                break;
-        }
-        return barcode;
+        return digitMap.get(digit);
     }
 }
