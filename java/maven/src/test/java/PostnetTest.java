@@ -1,5 +1,8 @@
+import com.google.common.collect.Lists;
 import com.tw.post.Postnet;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
@@ -121,7 +124,7 @@ public class PostnetTest {
         String post = "abc123";
         //when
         Postnet postnet = new Postnet();
-        String result = postnet.convertPost(post);
+        String result = postnet.convertPostToZipCode(post);
         //then
         assertThat(result).isEqualTo("");
     }
@@ -132,8 +135,48 @@ public class PostnetTest {
         String post = "123456";
         //when
         Postnet postnet = new Postnet();
-        String result = postnet.convertPost(post);
+        String result = postnet.convertPostToZipCode(post);
         //then
         assertThat(result).isEqualTo("");
+    }
+
+    @Test
+    public void should_return_formatNumber_given_unformatNumber(){
+        //given
+        String postNumber = "1234-55555";
+        //when
+        Postnet postnet = new Postnet();
+        List<Integer> result = postnet.formatPost(postNumber);
+        //then
+        StringBuilder resultStr = new StringBuilder();
+        for (int i:result) {
+            resultStr.append(i);
+        }
+        assertThat(resultStr.toString()).isEqualTo("123455555");
+    }
+
+    @Test
+    public void should_return_verifyCode_given_intList(){
+        List<Integer> digitList = Lists.newArrayList(9,5,7,1,3);
+        Postnet postnet = new Postnet();
+        int vieryCode = postnet.caclutateVerifyCode(digitList);
+        assertThat(vieryCode).isEqualTo(5);
+    }
+
+    @Test
+    public void should_return_StartAndStrop_barcode_given_inputPostNumber(){
+        String postNumber = "95713";
+        Postnet postnet = new Postnet();
+        String zipCode = postnet.convertPostToZipCode(postNumber);
+        assert zipCode.startsWith("|");
+        assert zipCode.endsWith("|");
+    }
+
+    @Test
+    public void should_return_zipCode_given_post_number(){
+        String postNumber = "95713";
+        Postnet postnet = new Postnet();
+        String zipCode = postnet.convertPostToZipCode(postNumber);
+        assert zipCode.equals("||:|:::|:|:|:::|:::||::||::|:|:|");
     }
 }

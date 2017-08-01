@@ -1,8 +1,8 @@
 package com.tw.post;
 
-import org.fest.util.VisibleForTesting;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Postnet {
@@ -27,12 +27,43 @@ public class Postnet {
         return digitMap.get(digit);
     }
 
-    public String convertPost(String post) {
+    public String convertPostToZipCode(String post) {
         if (!check(post)){
             return INVALIDATE_POST;
         }
-        return post;
+        List<Integer> digitList = formatPost(post);
+        int vieryCode = caclutateVerifyCode((digitList));
+        digitList.add(vieryCode);
+        StringBuilder zipResult = new StringBuilder();
+        zipResult.append("|");
+        for (int digit:digitList) {
+            zipResult.append(convertDigit(digit));
+        }
+        zipResult.append("|");
+        return zipResult.toString();
     }
+
+    public List<Integer> formatPost(String postNumber) {
+        List<Integer> digitList = new ArrayList<Integer>();
+        for (int i=0, size=postNumber.length();i<size;i++) {
+            char digit = postNumber.charAt(i);
+            if (digit == '-') {
+                continue;
+            }
+            digitList.add(Character.getNumericValue(digit));
+        }
+        return digitList;
+    }
+
+    public int caclutateVerifyCode(List<Integer> digistList) {
+        int sum = 0;
+        for (int i: digistList) {
+            sum += i;
+        }
+        int verifyCode = 10 - sum%10;
+        return verifyCode;
+    }
+
 
     private boolean check(String post) {
         if (post == null || post.length() == 0) {
