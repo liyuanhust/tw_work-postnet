@@ -8,116 +8,6 @@ import java.util.List;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class PostnetTest {
-    @Test
-    public void should_return_barcode_given_1(){
-        //given
-        int digit = 1;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo(":::||");
-    }
-
-    @Test
-    public void should_return_barcode_given_2(){
-        //given
-        int digit = 2;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("::|:|");
-    }
-
-    @Test
-    public void should_return_barcode_given_3(){
-        //given
-        int digit = 3;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("::||:");
-    }
-
-    @Test
-    public void should_return_barcode_given_4(){
-        //given
-        int digit = 4;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo(":|::|");
-    }
-
-    @Test
-    public void should_return_barcode_given_5(){
-        //given
-        int digit = 5;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo(":|:|:");
-    }
-
-    @Test
-    public void should_return_barcode_given_6(){
-        //given
-        int digit = 6;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo(":||::");
-    }
-
-    @Test
-    public void should_return_barcode_given_7(){
-        //given
-        int digit = 7;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("|:::|");
-    }
-
-    @Test
-    public void should_return_barcode_given_8(){
-        //given
-        int digit = 8;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("|::|:");
-    }
-
-    @Test
-    public void should_return_barcode_given_9(){
-        //given
-        int digit = 9;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("|:|::");
-    }
-
-    @Test
-    public void should_return_barcode_given_0(){
-        //given
-        int digit = 0;
-        //when
-        Postnet postnet = new Postnet();
-        String barcode = postnet.convertDigit(digit);
-        //then
-        assertThat(barcode).isEqualTo("||:::");
-    }
-
 
     @Test
     public void should_return_false_given_notdigit(){
@@ -156,12 +46,22 @@ public class PostnetTest {
         assert CollectionUtil.converIntListToString(result).equals("123455555");
     }
 
+
     @Test
-    public void should_return_verifyCode_given_intList(){
+    public void should_return_verifyCode_given_digitList(){
         List<Integer> digitList = Lists.newArrayList(9,5,7,1,3);
         Postnet postnet = new Postnet();
         int vieryCode = postnet.caclutateVerifyCode(digitList);
         assertThat(vieryCode).isEqualTo(5);
+    }
+
+
+    @Test
+    public void should_return_barcode_given_digitList(){
+        List<Integer> digitList = Lists.newArrayList(1,2,3,4,5,6,7,8,9,0);
+        Postnet postnet = new Postnet();
+        String barcodes = postnet.convertDigitListToBarcodes(digitList);
+        assertThat(barcodes).isEqualTo(":::||::|:|::||::|::|:|:|::||::|:::||::|:|:|::||:::");
     }
 
     @Test

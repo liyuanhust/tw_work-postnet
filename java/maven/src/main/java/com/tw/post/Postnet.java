@@ -25,8 +25,16 @@ public class Postnet {
         digitMap.put(0, "||:::");
     }
 
+    @VisibleForTesting
+    public String convertDigitListToBarcodes(List<Integer> digitList) {
+        StringBuilder barcodes = new StringBuilder();
+        for (int digit : digitList) {
+            barcodes.append(convertDigit(digit));
+        }
+        return barcodes.toString();
+    }
 
-    public String convertDigit(int digit) {
+    private String convertDigit(int digit) {
         return digitMap.get(digit);
     }
 
@@ -37,13 +45,10 @@ public class Postnet {
         List<Integer> digitList = formatPost(post);
         int vieryCode = caclutateVerifyCode((digitList));
         digitList.add(vieryCode);
-        StringBuilder zipResult = new StringBuilder();
-        zipResult.append("|");
-        for (int digit : digitList) {
-            zipResult.append(convertDigit(digit));
-        }
-        zipResult.append("|");
-        return zipResult.toString();
+
+        String barcodes = convertDigitListToBarcodes(digitList);
+        String zipCode = "|" + barcodes + "|";
+        return zipCode;
     }
 
     public List<Integer> formatPost(String postNumber) {
@@ -106,10 +111,10 @@ public class Postnet {
         if (!verifyPostDigits(digitList)) {
             return INVALIDATE_POST;
         }
-        digitList.remove(digitList.size()-1);
+        digitList.remove(digitList.size() - 1);
         String postCode = CollectionUtil.converIntListToString(digitList);
         if (digitList.size() == 9) {
-            postCode = postCode.substring(0,4)+"-"+postCode.substring(4,9);
+            postCode = postCode.substring(0, 4) + "-" + postCode.substring(4, 9);
         }
         return postCode;
     }
